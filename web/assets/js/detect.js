@@ -94,7 +94,19 @@
     setNote("info", "Connecting to the inference service at <code>" + AgriNivis.escapeHtml(base) + "</code>. If the free API has been idle, this can take up to a minute while it wakes.");
 
     try {
-      const response = await fetch(healthUrl, { signal: timeoutSignal(75000), cache: "no-store" });
+      let response = null;
+      for (let attempt = 1; attempt <= 2; attempt += 1) {
+        try {
+          response = await fetch(healthUrl, { signal: timeoutSignal(75000), cache: "no-store" });
+        } catch (error) {
+          response = null;
+          if (attempt === 2) throw error;
+        }
+        if (response && !(response.ok === false && [502, 503, 504].includes(response.status))) break;
+        setStatus("checking", "Waking model service");
+        setNote("info", "The free API is waking up. Retrying in a few seconds...");
+        await new Promise(function (resolve) { setTimeout(resolve, 6000); });
+      }
       const data = await response.json().catch(function () { return {}; });
       if (response.ok && data.model_loaded) {
         state.apiOnline = true;
@@ -103,14 +115,14 @@
       } else {
         state.apiOnline = false;
         setStatus("error", "Model unavailable");
-        setNote("error", "The API answered but the model is not loaded. Check the service logs, then retry. <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-open-api-settings style=\"padding:0 4px;min-height:auto;text-decoration:underline\">API settings</button>");
+        setNote("error", "The API answered but the model is not loaded. Check the service logs, then retry. <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-retry-health style=\"padding:0 4px;min-height:auto;text-decoration:underline\">Retry</button> <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-open-api-settings style=\"padding:0 4px;min-height:auto;text-decoration:underline\">API settings</button>");
       }
     } catch (error) {
       state.apiOnline = false;
       setStatus("error", "Service offline");
       setNote(
         "error",
-        "Could not reach the inference API. If you have not deployed it, open <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-open-api-settings style=\"padding:0 4px;min-height:auto;text-decoration:underline\">API settings</button> and add the URL from your deployment."
+        "Could not reach the inference API. Free hosting can take up to a minute to wake. <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-retry-health style=\"padding:0 4px;min-height:auto;text-decoration:underline\">Retry</button>, or open <button type=\"button\" class=\"btn btn-ghost btn-sm\" data-open-api-settings style=\"padding:0 4px;min-height:auto;text-decoration:underline\">API settings</button> to check the URL."
       );
     }
     bindSettingsButtons();
@@ -489,6 +501,9 @@
     }
 
     document.addEventListener("agrinivis:api-changed", checkHealth);
+    document.addEventListener("click", function (event) {
+      if (event.target.closest("[data-retry-health]")) checkHealth();
+    });
     document.querySelectorAll("[data-close-disease]").forEach(function (button) {
       button.addEventListener("click", closeDisease);
     });
