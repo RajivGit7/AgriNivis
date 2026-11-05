@@ -17,8 +17,8 @@ The frontend is static and deploys to GitHub Pages. The ML model runs in a separ
 
 | Part | Host | URL |
 | --- | --- | --- |
-| Website | GitHub Pages | `https://<username>.github.io/<repo>/` |
-| Model API | Hugging Face Spaces / Render | `https://<your-space>.hf.space` |
+| Website | GitHub Pages | <https://rajivgit7.github.io/AgriNivis/> |
+| Model API | Hugging Face Spaces / Render | Pending — set `API_BASE_URL` after deploying |
 
 The URLs are configured in `web/assets/js/config.js` and can be overridden at runtime from **API settings** on the detection page.
 
