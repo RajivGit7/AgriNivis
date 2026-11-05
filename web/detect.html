@@ -249,13 +249,13 @@
       <p>
         AgriNivis keeps the ML model on a separate service. Enter the public URL
         of your deployed inference API, for example
-        <strong>https://username-agrinivis-ml.hf.space</strong>. Leave blank to
+        <strong>https://agrinivis-ml.onrender.com</strong>. Leave blank to
         use the value in <code>assets/js/config.js</code>.
       </p>
       <form id="api-settings-form">
         <div class="field">
           <label for="api-url-input">API base URL</label>
-          <input class="input" id="api-url-input" type="url" placeholder="https://your-space.hf.space" autocomplete="off">
+          <input class="input" id="api-url-input" type="url" placeholder="https://agrinivis-ml.onrender.com" autocomplete="off">
           <span class="hint">The site calls <code>/health</code> and <code>/predict</code> on this URL.</span>
         </div>
         <div class="modal-actions">

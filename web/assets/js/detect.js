@@ -91,10 +91,10 @@
     }
 
     setStatus("checking", "Checking model service");
-    setNote("info", "Connecting to the inference service at <code>" + AgriNivis.escapeHtml(base) + "</code>...");
+    setNote("info", "Connecting to the inference service at <code>" + AgriNivis.escapeHtml(base) + "</code>. If the free API has been idle, this can take up to a minute while it wakes.");
 
     try {
-      const response = await fetch(healthUrl, { signal: timeoutSignal(9000), cache: "no-store" });
+      const response = await fetch(healthUrl, { signal: timeoutSignal(75000), cache: "no-store" });
       const data = await response.json().catch(function () { return {}; });
       if (response.ok && data.model_loaded) {
         state.apiOnline = true;
@@ -225,7 +225,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ image: dataUrl }),
-        signal: timeoutSignal(60000),
+        signal: timeoutSignal(120000),
       });
       const payload = await response.json().catch(function () { return {}; });
       if (!response.ok) {

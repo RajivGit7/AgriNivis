@@ -86,7 +86,10 @@ instead; `app.py` automatically falls back to `tensorflow.lite`.
 python test_local.py
 ```
 
-## Deploy to Hugging Face Spaces (free CPU)
+## Deploy to Hugging Face Spaces
+
+> Hugging Face now requires a PRO subscription for Docker Spaces on `cpu-basic`.
+> The Render path below is free and powers the live demo.
 
 1. Create a new Space at <https://huggingface.co/new-space>.
 2. Choose **Docker** → blank template → CPU basic.

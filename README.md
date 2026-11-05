@@ -18,7 +18,7 @@ The frontend is static and deploys to GitHub Pages. The ML model runs in a separ
 | Part | Host | URL |
 | --- | --- | --- |
 | Website | GitHub Pages | <https://rajivgit7.github.io/AgriNivis/> |
-| Model API | Hugging Face Spaces / Render | Pending — set `API_BASE_URL` after deploying |
+| Model API | Render | <https://agrinivis-ml.onrender.com> |
 
 The URLs are configured in `web/assets/js/config.js` and can be overridden at runtime from **API settings** on the detection page.
 
@@ -160,7 +160,9 @@ python scripts/sync_data.py
 
 ## Deployment
 
-### A. Deploy the ML model to Hugging Face Spaces (free CPU)
+### A. Deploy the ML model to Hugging Face Spaces
+
+> Hugging Face now requires a PRO subscription to host Docker Spaces on `cpu-basic`. The Render path below is free and is what the live demo uses.
 
 1. Create a Space at <https://huggingface.co/new-space>.
 2. Select **Docker** → blank template → **CPU basic**.
@@ -173,7 +175,10 @@ python scripts/sync_data.py
 
 5. Open that URL with `/health` to confirm `model_loaded: true`.
 
-### B. Alternative: deploy the ML model to Render
+### B. Deploy the ML model to Render (free)
+
+The live demo runs at <https://agrinivis-ml.onrender.com>. Free services sleep after
+15 minutes of inactivity, so the first request can take up to a minute.
 
 Use the included `render.yaml`, or create a **Web Service → Docker**:
 
@@ -215,7 +220,7 @@ No build step is required.
 
 ```js
 window.AGRINIVIS_CONFIG = {
-  API_BASE_URL: "https://YOUR-SPACE.hf.space",
+  API_BASE_URL: "https://agrinivis-ml.onrender.com",
   API_BASE_URL_LOCAL: "http://127.0.0.1:7860",
   REPO_URL: "https://github.com/RajivGit7/AgriNivis",
   RESEARCH_PAPER_URL: "...",
