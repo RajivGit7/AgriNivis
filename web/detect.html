@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crop disease detection — AgriNivis</title>
+  <meta name="description" content="Upload or capture a crop leaf photo and let the AgriNivis TFLite model identify the likely disease with prevention and treatment guidance.">
+  <meta name="theme-color" content="#14532d">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="detect">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="AgriNivis home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">AgriNivis</span>
+          <span class="brand-tag">Field intelligence</span>
+        </span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a data-nav="home" href="index.html">Home</a></li>
+          <li><a data-nav="detect" href="detect.html">Disease detection</a></li>
+          <li><a data-nav="recommend" href="recommend.html">Crop recommendation</a></li>
+          <li><a data-nav="about" href="about.html">Research</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm" href="recommend.html">Plan a crop</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container page-hero-row">
+        <div>
+          <span class="eyebrow">Crop disease detection</span>
+          <h1>One clear photo. A useful next step.</h1>
+          <p>
+            Upload or capture a single crop leaf. The model checks it against 12
+            apple, rice, corn and grape disease classes, then returns a confidence
+            score with prevention and treatment guidance.
+          </p>
+        </div>
+        <div class="badge badge-green" style="padding:9px 14px" id="page-status">
+          <span class="dot"></span>
+          <span id="page-status-text">Checking model service</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:8px">
+      <div class="container">
+        <div class="detect-layout">
+          <div class="upload-panel reveal">
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose or drop a leaf photo">
+              <div class="upload-placeholder">
+                <div class="upload-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <h3>Drop a leaf photo here</h3>
+                <p>Or tap to browse. Use one leaf on a plain background, in good light, with the affected area in focus.</p>
+                <div class="upload-meta">
+                  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> JPG, PNG or WebP</span>
+                  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Up to 12 MB</span>
+                  <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> Result in seconds</span>
+                </div>
+              </div>
+              <div class="preview-wrap">
+                <img id="preview" alt="Selected leaf preview">
+                <div class="preview-overlay">
+                  <span class="preview-filename" id="preview-name">leaf.jpg</span>
+                  <button class="icon-btn" type="button" id="remove-image" aria-label="Remove selected image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <input type="file" id="file-input" accept="image/*" hidden>
+            <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
+
+            <div class="upload-actions">
+              <button class="btn btn-outline" type="button" id="browse-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Choose photo
+              </button>
+              <button class="btn btn-outline" type="button" id="camera-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Camera
+              </button>
+              <button class="btn btn-primary" type="button" id="analyze-btn" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span id="analyze-label">Analyse leaf</span>
+              </button>
+            </div>
+
+            <div class="server-note" id="api">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+              <span id="server-note-text">
+                Checking the inference service. The disease model runs on a separate API,
+                so the website stays fast and static.
+              </span>
+              <button type="button" class="btn btn-ghost btn-sm" data-open-api-settings style="margin-left:auto;flex-shrink:0">API settings</button>
+            </div>
+
+            <div class="form-error" id="detect-error" role="alert"></div>
+          </div>
+
+          <div class="result-panel reveal" id="result-panel" aria-live="polite">
+            <div class="result-empty">
+              <div class="icon-tile" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+              </div>
+              <h3 style="font-size:1.2rem">Your result will appear here</h3>
+              <p>Select a leaf photo and press Analyse. You will get the most likely disease, the model's confidence, and a treatment checklist.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:28px">
+          <div class="card reveal">
+            <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
+            <h3 style="margin-top:14px">Use natural light</h3>
+            <p class="muted small" style="margin-top:6px">Avoid harsh shadows, flash glare and heavily filtered photos. Daylight usually gives the model the clearest colour signal.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7"/><path d="M5 10c3 0 5 2 7 5 2-3 4-5 7-5"/></svg></div>
+            <h3 style="margin-top:14px">Fill the frame</h3>
+            <p class="muted small" style="margin-top:6px">Place a single leaf on a plain surface and keep the affected area sharp. Avoid mixing several leaves or background clutter.</p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile clay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <h3 style="margin-top:14px">Check the confidence</h3>
+            <p class="muted small" style="margin-top:6px">Below 60% the result is flagged as uncertain. Take another photo or ask an agronomist before acting on a low-confidence label.</p>
+          </div>
+        </div>
+
+        <div class="disclaimer-strip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <strong>This is not a laboratory test.</strong>
+            The model recognises only the 12 classes it was trained on. A confident
+            prediction can still be wrong, and an unknown disease may be forced into
+            one of those classes. Confirm with your local extension service before
+            spraying.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="library">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Disease library</span>
+          <h2>The 12 classes the model knows.</h2>
+          <p class="lede">
+            Browse the full knowledge base even without the API. Each entry
+            includes the pathogen, favourable conditions, symptoms, prevention and
+            treatment guidance.
+          </p>
+        </div>
+
+        <div class="disease-filters" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px">
+          <div class="segmented" id="crop-filter" role="group" aria-label="Filter by crop">
+            <input type="radio" name="crop-filter" id="filter-all" value="all" checked>
+            <label for="filter-all">All crops</label>
+            <input type="radio" name="crop-filter" id="filter-apple" value="Apple">
+            <label for="filter-apple">Apple</label>
+            <input type="radio" name="crop-filter" id="filter-rice" value="Rice">
+            <label for="filter-rice">Rice</label>
+            <input type="radio" name="crop-filter" id="filter-corn" value="Corn">
+            <label for="filter-corn">Corn</label>
+            <input type="radio" name="crop-filter" id="filter-grape" value="Grape">
+            <label for="filter-grape">Grape</label>
+          </div>
+        </div>
+
+        <div class="library-grid" id="library-grid">
+          <div class="card" style="grid-column:1/-1;text-align:center;padding:36px">
+            <p class="muted">Loading the disease library...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="AgriNivis home">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg></span>
+            <span class="brand-text"><span class="brand-name">AgriNivis</span><span class="brand-tag">Field intelligence</span></span>
+          </a>
+          <p>An open AI-assisted agriculture project for early disease detection and climate-aware crop planning.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="detect.html">Disease detection</a></li>
+            <li><a href="recommend.html">Crop recommendation</a></li>
+            <li><a href="detect.html#library">Disease library</a></li>
+            <li><a href="recommend.html#method">Scoring method</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="about.html">About &amp; research</a></li>
+            <li><a href="about.html#paper">Research paper</a></li>
+            <li><a href="about.html#model">Model details</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">GitHub repository</a></li>
+            <li><a href="detect.html#api">API settings</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="footer-year">2026</span> AgriNivis. Built for farmers and researchers.</span>
+        <span class="footer-badge"><span class="dot"></span> AI screening aid, not a lab test</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="api-modal" role="dialog" aria-modal="true" aria-labelledby="api-modal-title" aria-hidden="true">
+    <div class="modal-card">
+      <h3 id="api-modal-title">Model API URL</h3>
+      <p>
+        AgriNivis keeps the ML model on a separate service. Enter the public URL
+        of your deployed inference API, for example
+        <strong>https://username-agrinivis-ml.hf.space</strong>. Leave blank to
+        use the value in <code>assets/js/config.js</code>.
+      </p>
+      <form id="api-settings-form">
+        <div class="field">
+          <label for="api-url-input">API base URL</label>
+          <input class="input" id="api-url-input" type="url" placeholder="https://your-space.hf.space" autocomplete="off">
+          <span class="hint">The site calls <code>/health</code> and <code>/predict</code> on this URL.</span>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost btn-sm" id="api-reset">Reset</button>
+          <button type="button" class="btn btn-outline btn-sm" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save and retry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="disease-modal" role="dialog" aria-modal="true" aria-labelledby="disease-modal-title" aria-hidden="true">
+    <div class="modal-card" style="width:min(620px,100%);max-height:88vh;overflow:auto">
+      <div id="disease-modal-content"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline btn-sm" data-close-disease>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/detect.js"></script>
+</body>
+</html>

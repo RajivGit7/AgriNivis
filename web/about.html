@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About and research — AgriNivis</title>
+  <meta name="description" content="Learn about the AgriNivis crop disease model, the recommendation methodology, responsible AI limits and the research paper.">
+  <meta name="theme-color" content="#14532d">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="AgriNivis home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg></span>
+        <span class="brand-text"><span class="brand-name">AgriNivis</span><span class="brand-tag">Field intelligence</span></span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a data-nav="home" href="index.html">Home</a></li>
+          <li><a data-nav="detect" href="detect.html">Disease detection</a></li>
+          <li><a data-nav="recommend" href="recommend.html">Crop recommendation</a></li>
+          <li><a data-nav="about" href="about.html">Research</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm" href="detect.html">Scan a leaf</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">About AgriNivis</span>
+        <h1>Useful intelligence, close to the field.</h1>
+        <p>
+          AgriNivis is a student-built agriculture platform with two practical
+          goals: help farmers recognise crop disease earlier, and help them choose
+          a crop that fits the land, water and season they actually have.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container about-grid">
+        <div class="reveal">
+          <span class="eyebrow">Why it exists</span>
+          <h2 style="font-size:clamp(1.8rem,3.2vw,2.5rem)">Advice is often scarce exactly when it matters.</h2>
+          <p class="lede" style="margin-top:18px">
+            A farmer may notice yellowing or lesions days before an extension
+            officer can visit. By then, a disease can spread across a field or a
+            whole village. The same gap affects planting decisions: seed is bought
+            before the season's water and weather are fully known.
+          </p>
+          <p class="lede" style="margin-top:14px">
+            AgriNivis puts a lightweight vision model and a transparent crop
+            suitability engine in the browser, so the first check is fast,
+            explainable and available without an account.
+          </p>
+
+          <div class="tech-list" style="margin-top:26px">
+            <span>TensorFlow / Keras</span>
+            <span>MobileNetV2 transfer learning</span>
+            <span>TensorFlow Lite</span>
+            <span>Flask inference API</span>
+            <span>Static HTML / CSS / JS</span>
+            <span>Open-Meteo weather</span>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3 style="margin-bottom:20px">The project in numbers</h3>
+          <div class="metric-grid">
+            <div class="metric"><strong>12</strong><span>Disease classes</span></div>
+            <div class="metric"><strong>4</strong><span>Crops in the vision model</span></div>
+            <div class="metric"><strong>24</strong><span>Crops in the recommender</span></div>
+            <div class="metric"><strong>2.5 MB</strong><span>TFLite model size</span></div>
+          </div>
+          <hr class="divider">
+          <div class="timeline">
+            <div class="timeline-item">
+              <h3>Collect and prepare</h3>
+              <p>Curate labelled leaf images across apple, rice, corn and grape; clean duplicates and standardise the label set.</p>
+            </div>
+            <div class="timeline-item">
+              <h3>Train and compress</h3>
+              <p>Use transfer learning on a compact convolutional backbone, then export a quantised TFLite model for CPU inference.</p>
+            </div>
+            <div class="timeline-item">
+              <h3>Deploy separately</h3>
+              <p>Serve the model from an independent container API, while the website remains a static GitHub Pages site.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Model details</span>
+          <h2>From leaf pixels to a ranked diagnosis.</h2>
+          <p class="lede">
+            The classifier is deliberately compact: a 224×224 RGB image enters a
+            convolutional network, and a softmax layer returns a probability for
+            each of the 12 supported classes.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card reveal">
+            <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+            <h3 style="margin-top:16px">Input pipeline</h3>
+            <p class="muted small" style="margin-top:8px">
+              EXIF orientation is corrected, the image is converted to RGB,
+              bilinearly resized to 224×224, and scaled to [0, 1] as float32. The
+              service validates content type and size before inference.
+            </p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <h3 style="margin-top:16px">Inference</h3>
+            <p class="muted small" style="margin-top:8px">
+              The TFLite interpreter runs on CPU with a single worker, keeping the
+              API cheap enough for a free hosting tier. Predictions return the top
+              three probabilities plus a low-confidence flag below 60%.
+            </p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile clay" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></div>
+            <h3 style="margin-top:16px">Knowledge layer</h3>
+            <p class="muted small" style="margin-top:8px">
+              Each class is linked to a curated entry with pathogen, favourable
+              conditions, symptoms, prevention, treatment and an agronomist note.
+              Guidance is educational and avoids pesticide dosage instructions.
+            </p>
+          </div>
+        </div>
+
+        <div class="card reveal" style="margin-top:24px;background:var(--mint-soft)">
+          <div class="grid grid-2" style="gap:28px;align-items:center">
+            <div>
+              <span class="badge badge-green">Separate deployment</span>
+              <h3 style="margin-top:14px">The model lives behind its own API.</h3>
+              <p class="muted small" style="margin-top:10px">
+                GitHub Pages can only serve static files, so the ML service is
+                deployed independently as a Docker container. The website calls
+                <code>/health</code> and <code>/predict</code>, and the API URL is
+                configurable at runtime. This keeps the site fast while letting the
+                model scale or move without a frontend rebuild.
+              </p>
+            </div>
+            <div class="tech-list">
+              <span>POST /predict</span>
+              <span>GET /health</span>
+              <span>GET /classes</span>
+              <span>Top-3 probabilities</span>
+              <span>CORS controlled</span>
+              <span>12 MB upload limit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="paper">
+      <div class="container">
+        <div class="grid grid-2" style="gap:32px;align-items:start">
+          <div class="reveal">
+            <span class="eyebrow">Research paper</span>
+            <h2 style="font-size:clamp(1.9rem,3.4vw,2.7rem)">A reproducible, two-part agriculture system.</h2>
+            <p class="lede" style="margin-top:18px">
+              The accompanying paper documents the dataset preparation, transfer
+              learning setup, evaluation protocol, recommendation weights and the
+              deployment architecture. It is written so another team can reproduce
+              the pipeline end to end.
+            </p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px">
+              <a class="btn btn-primary" href="https://github.com/RajivGit7/AgriNivis/blob/main/docs/research-paper.md" target="_blank" rel="noopener">
+                Read the draft
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+              <a class="btn btn-outline" href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">View code</a>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <h3 style="font-size:1.15rem">Draft sections</h3>
+            <ol style="margin:16px 0 0;padding-left:20px;color:var(--muted);font-size:.9rem;display:grid;gap:9px">
+              <li>Abstract and problem statement</li>
+              <li>Related work in plant disease recognition</li>
+              <li>Dataset construction and label taxonomy</li>
+              <li>Model architecture and training recipe</li>
+              <li>Evaluation metrics and error analysis</li>
+              <li>Crop recommendation methodology</li>
+              <li>System architecture and deployment</li>
+              <li>Limitations, ethics and future work</li>
+            </ol>
+            <hr class="divider">
+            <p class="tiny muted">
+              Status: working draft. Accuracy tables, confusion matrix and ablation
+              results are filled from the final training run before submission.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="responsible">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Responsible use</span>
+          <h2>What AgriNivis can and cannot do.</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="card reveal">
+            <div class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3 style="margin-top:16px">Privacy</h3>
+            <p class="muted small" style="margin-top:8px">
+              Photos are sent to the inference API only when you press Analyse. The
+              service processes them in memory and does not build a user profile or
+              image archive. Crop recommendations run entirely in your browser.
+            </p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <h3 style="margin-top:16px">Limits</h3>
+            <p class="muted small" style="margin-top:8px">
+              The classifier only knows 12 classes. It can be confidently wrong on
+              an unseen disease, a poor photo or a different crop. It is not a
+              substitute for a plant clinic, a soil test or an agronomist.
+            </p>
+          </div>
+          <div class="card reveal">
+            <div class="icon-tile sky" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+            <h3 style="margin-top:16px">Safe treatment</h3>
+            <p class="muted small" style="margin-top:8px">
+              Treatment guidance names active ingredients but never recommends a
+              dosage. Always read the product label, respect pre-harvest intervals
+              and follow local restrictions. Integrated pest management comes first.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container container-narrow">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>Common questions.</h2>
+        </div>
+        <div class="accordion">
+          <details class="accordion-item" open>
+            <summary>Does AgriNivis store my leaf photos?</summary>
+            <div class="accordion-body">
+              The reference API processes an uploaded image in memory and returns a
+              prediction. It does not write the image to disk or to a database. If
+              you deploy your own fork, review and document your hosting provider's
+              logging behaviour.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>Why does the disease API need a separate service?</summary>
+            <div class="accordion-body">
+              GitHub Pages is a static host: it cannot run Python or TensorFlow.
+              The ML service is deployed separately and the static site calls it.
+              This is also how real systems separate a model service from a web
+              frontend, allowing each to scale independently.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>How accurate is the model?</summary>
+            <div class="accordion-body">
+              Accuracy depends on the dataset split, crop, disease and photo
+              quality. The paper reports per-class precision, recall and F1 along
+              with a confusion matrix. In the app, always read the confidence and
+              the low-confidence warning rather than the label alone.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>Is the crop recommendation a trained model?</summary>
+            <div class="accordion-body">
+              No. It is a transparent knowledge-based scoring engine. This lets it
+              use inputs that public crop datasets usually lack, such as previous
+              crop, irrigation reliability and soil type, while explaining every
+              point in the score. The disease classifier is the trained ML model.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>Can I use this for my own project?</summary>
+            <div class="accordion-body">
+              The repository includes the inference service, website, deployment
+              workflow and paper draft. Check the licence in the repository before
+              redistribution, and re-verify all agronomic guidance with local
+              experts before using it with farmers.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="contact">
+      <div class="container">
+        <div class="card reveal" style="background:linear-gradient(150deg,#173e29,#0d2b1a);color:#fff;border:0;padding:clamp(32px,5vw,52px);border-radius:var(--radius-lg);display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap">
+          <div style="max-width:560px">
+            <span class="eyebrow" style="color:#c5e17a">Collaborate</span>
+            <h2 style="color:#fff;font-size:clamp(1.8rem,3.2vw,2.5rem)">Build the next version with us.</h2>
+            <p style="color:rgba(255,255,255,.72);margin-top:14px;font-size:.95rem">
+              We welcome agronomists, dataset partners and developers who want to
+              extend the class list, validate recommendations in the field or
+              improve the research.
+            </p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn btn-accent" href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">Open an issue</a>
+            <a class="btn btn-outline" href="https://github.com/RajivGit7" target="_blank" rel="noopener" style="color:#fff;border-color:rgba(255,255,255,.3)">GitHub profile</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="AgriNivis home">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg></span>
+            <span class="brand-text"><span class="brand-name">AgriNivis</span><span class="brand-tag">Field intelligence</span></span>
+          </a>
+          <p>An open AI-assisted agriculture project for early disease detection and climate-aware crop planning.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="detect.html">Disease detection</a></li>
+            <li><a href="recommend.html">Crop recommendation</a></li>
+            <li><a href="detect.html#library">Disease library</a></li>
+            <li><a href="recommend.html#method">Scoring method</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="about.html">About &amp; research</a></li>
+            <li><a href="about.html#paper">Research paper</a></li>
+            <li><a href="about.html#model">Model details</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">GitHub repository</a></li>
+            <li><a href="detect.html#api">API settings</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="footer-year">2026</span> AgriNivis. Built for farmers and researchers.</span>
+        <span class="footer-badge"><span class="dot"></span> AI screening aid, not a lab test</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

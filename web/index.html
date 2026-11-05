@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgriNivis — AI crop disease detection and crop recommendation</title>
+  <meta name="description" content="AgriNivis helps farmers detect crop leaf diseases with an on-device-friendly AI model and choose suitable crops using soil, water, season and local weather.">
+  <meta name="theme-color" content="#14532d">
+  <meta property="og:title" content="AgriNivis — smarter decisions from leaf to field">
+  <meta property="og:description" content="AI crop disease detection and weather-aware crop recommendations for farmers.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="AgriNivis home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">AgriNivis</span>
+          <span class="brand-tag">Field intelligence</span>
+        </span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a data-nav="home" href="index.html">Home</a></li>
+          <li><a data-nav="detect" href="detect.html">Disease detection</a></li>
+          <li><a data-nav="recommend" href="recommend.html">Crop recommendation</a></li>
+          <li><a data-nav="about" href="about.html">Research</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm" href="detect.html">Scan a leaf</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow hero-eyebrow">AI for the smallholder farm</span>
+          <h1>Better decisions, <span class="accent">from leaf</span> to field.</h1>
+          <p class="lede">
+            AgriNivis pairs a trained crop-disease vision model with a soil-aware
+            crop recommendation engine, so farmers can act early, plant smarter
+            and waste less.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="detect.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Scan a crop leaf
+            </a>
+            <a class="btn btn-outline" href="recommend.html">
+              Find a suitable crop
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong>12</strong>
+              <span>disease classes</span>
+            </div>
+            <div class="hero-stat">
+              <strong>24</strong>
+              <span>crops in recommender</span>
+            </div>
+            <div class="hero-stat">
+              <strong>2.5 MB</strong>
+              <span>lightweight model</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit"></div>
+          <div class="hero-blob"></div>
+
+          <div class="scan-card">
+            <div class="scan-image">
+              <div class="scan-corners"><span></span><span></span><span></span><span></span></div>
+              <div class="scan-line"></div>
+            </div>
+            <div class="scan-result">
+              <div class="scan-result-top">
+                <span>Detected</span>
+                <strong>94.2% match</strong>
+              </div>
+              <div class="scan-disease">Rice blast</div>
+              <div class="scan-bar"><i></i></div>
+            </div>
+          </div>
+
+          <div class="floating-chip chip-weather">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            Weather-aware
+          </div>
+          <div class="floating-chip chip-crop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7"/><path d="M5 10c3 0 5 2 7 5 2-3 4-5 7-5"/></svg>
+            Soil-aware
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="grid grid-2">
+          <article class="card card-hover feature-card reveal">
+            <div class="icon-tile clay" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            </div>
+            <span class="badge badge-clay">Crop disease detection</span>
+            <h3>Know what is affecting your crop, in seconds.</h3>
+            <p>
+              Photograph a leaf. The AgriNivis model identifies one of 12 supported
+              apple, rice, corn and grape diseases, then shows the likely cause,
+              symptoms, preventive steps and treatment options.
+            </p>
+            <a class="feature-link" href="detect.html">
+              Open the leaf scanner
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="card card-hover feature-card reveal">
+            <div class="icon-tile amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7"/><path d="M5 10c3 0 5 2 7 5 2-3 4-5 7-5"/></svg>
+            </div>
+            <span class="badge badge-amber">Smart crop recommendation</span>
+            <h3>Match the crop to your land, water and season.</h3>
+            <p>
+              Share soil type, moisture, pH, previous crop, fertilizer use,
+              irrigation and season. AgriNivis scores 24 crops and adds local
+              temperature and rainfall context before ranking the best options.
+            </p>
+            <a class="feature-link" href="recommend.html">
+              Get crop recommendations
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps from uncertainty to action.</h2>
+          <p class="lede">
+            No account, no complicated setup. Start with a photo or a short field
+            questionnaire and get an answer you can use the same day.
+          </p>
+        </div>
+
+        <div class="grid grid-3 step-grid">
+          <article class="step reveal">
+            <h3>Capture or describe</h3>
+            <p>
+              Take a clear photo of a single affected leaf, or enter the basic
+              conditions of your plot in the recommendation form.
+            </p>
+          </article>
+          <article class="step reveal">
+            <h3>Let the model analyse</h3>
+            <p>
+              The TFLite vision model runs on a lightweight inference service.
+              The recommender applies agronomic rules plus live weather data.
+            </p>
+          </article>
+          <article class="step reveal">
+            <h3>Act with context</h3>
+            <p>
+              Read the likely diagnosis, confidence and treatment guidance, or
+              compare ranked crops with the reasons behind each score.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="stat-band reveal">
+          <div class="stat">
+            <strong>4</strong>
+            <span>Crops covered by the disease model</span>
+          </div>
+          <div class="stat">
+            <strong>12</strong>
+            <span>Disease classes with treatment guidance</span>
+          </div>
+          <div class="stat">
+            <strong>24</strong>
+            <span>Crops ranked by the recommender</span>
+          </div>
+          <div class="stat">
+            <strong>0</strong>
+            <span>API keys needed for weather context</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Coverage</span>
+          <h2>Crops in the current release.</h2>
+          <p class="lede">
+            The disease classifier is trained on apple, rice, corn and grape
+            leaves. The recommendation engine covers major cereals, pulses,
+            oilseeds, millets and cash crops.
+          </p>
+        </div>
+        <div class="crop-strip reveal">
+          <span class="crop-pill"><span class="dot"></span>Apple</span>
+          <span class="crop-pill"><span class="dot"></span>Rice</span>
+          <span class="crop-pill"><span class="dot"></span>Corn</span>
+          <span class="crop-pill"><span class="dot"></span>Grape</span>
+          <span class="crop-pill amber"><span class="dot"></span>Wheat</span>
+          <span class="crop-pill amber"><span class="dot"></span>Maize</span>
+          <span class="crop-pill amber"><span class="dot"></span>Cotton</span>
+          <span class="crop-pill amber"><span class="dot"></span>Soybean</span>
+          <span class="crop-pill clay"><span class="dot"></span>Chickpea</span>
+          <span class="crop-pill clay"><span class="dot"></span>Groundnut</span>
+          <span class="crop-pill clay"><span class="dot"></span>Pearl millet</span>
+          <span class="crop-pill clay"><span class="dot"></span>+ 14 more</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <article class="card reveal">
+            <div class="icon-tile" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 style="margin-top:16px">Act early</h3>
+            <p class="muted small" style="margin-top:8px">
+              Early detection limits spread. The result includes practical
+              prevention and treatment steps, not just a label.
+            </p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-tile amber" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+            </div>
+            <h3 style="margin-top:16px">Use local context</h3>
+            <p class="muted small" style="margin-top:8px">
+              Recommendations combine field conditions with temperature and
+              rainfall from a free weather service, using your coordinates.
+            </p>
+          </article>
+          <article class="card reveal">
+            <div class="icon-tile sky" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3 style="margin-top:16px">Built to be clear</h3>
+            <p class="muted small" style="margin-top:8px">
+              Every score is explainable. Every prediction carries a confidence
+              value and a reminder to confirm with a local agronomist.
+            </p>
+          </article>
+        </div>
+
+        <div class="disclaimer-strip reveal" style="margin-top:28px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <strong>AgriNivis is a screening aid.</strong>
+            It does not replace laboratory diagnosis or a licensed agronomist.
+            Always confirm a disease before applying pesticides, and follow the
+            product label and local regulations.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="container">
+        <div class="card reveal" style="background:linear-gradient(150deg,#173e29,#0d2b1a);color:#fff;border:0;padding:clamp(32px,5vw,58px);display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;border-radius:var(--radius-lg);position:relative;overflow:hidden">
+          <div style="position:relative;max-width:560px">
+            <span class="eyebrow" style="color:#c5e17a">Start now</span>
+            <h2 style="color:#fff;font-size:clamp(1.8rem,3.4vw,2.7rem)">One leaf. One field. Better choices.</h2>
+            <p style="color:rgba(255,255,255,.72);margin-top:14px;font-size:.95rem">
+              Try the scanner with a photo from your farm, or build a crop plan
+              from the conditions you already know.
+            </p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;position:relative">
+            <a class="btn btn-accent" href="detect.html">Scan a leaf</a>
+            <a class="btn btn-outline" href="recommend.html" style="color:#fff;border-color:rgba(255,255,255,.3)">Recommend a crop</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="AgriNivis home">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg>
+            </span>
+            <span class="brand-text">
+              <span class="brand-name">AgriNivis</span>
+              <span class="brand-tag">Field intelligence</span>
+            </span>
+          </a>
+          <p>An open AI-assisted agriculture project for early disease detection and climate-aware crop planning.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="detect.html">Disease detection</a></li>
+            <li><a href="recommend.html">Crop recommendation</a></li>
+            <li><a href="detect.html#library">Disease library</a></li>
+            <li><a href="recommend.html#method">Scoring method</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="about.html">About &amp; research</a></li>
+            <li><a href="about.html#paper">Research paper</a></li>
+            <li><a href="about.html#model">Model details</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">GitHub repository</a></li>
+            <li><a href="detect.html#api">API settings</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="footer-year">2026</span> AgriNivis. Built for farmers and researchers.</span>
+        <span class="footer-badge"><span class="dot"></span> AI screening aid, not a lab test</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+</body>
+</html>

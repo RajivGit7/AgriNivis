@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: agrinivis-ml
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerContext: ./ml-service
+    dockerfilePath: ./ml-service/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://rajivgit7.github.io
+      - key: LOW_CONFIDENCE_THRESHOLD
+        value: "0.60"

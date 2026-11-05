@@ -1,0 +1,407 @@
+{
+  "model": {
+    "name": "AgriNivis MobileNetV2 crop-disease classifier",
+    "input_size": 224,
+    "input_dtype": "float32",
+    "preprocessing": "RGB, resized to 224x224, scaled to [0, 1]",
+    "output": "softmax over 12 classes",
+    "version": "1.0.0"
+  },
+  "classes": [
+    {
+      "index": 0,
+      "label": "Apple scab",
+      "crop": "Apple",
+      "disease": "Apple scab",
+      "slug": "apple-scab",
+      "pathogen": "Venturia inaequalis (fungus)",
+      "severity": "moderate",
+      "cause": "A fungal infection that survives the winter in fallen leaves and infects new growth during cool, wet spring weather.",
+      "favorable_conditions": "Cool (15-21 C), wet spring weather with long leaf-wetness periods.",
+      "symptoms": [
+        "Olive-green to black velvety spots on leaves",
+        "Deformed, curled or prematurely dropping leaves",
+        "Dark, scabby lesions on fruit and twigs"
+      ],
+      "prevention": [
+        "Plant scab-resistant apple varieties where available",
+        "Rake and destroy fallen leaves in autumn",
+        "Prune the canopy to improve airflow and sunlight penetration",
+        "Avoid overhead irrigation; water at the base",
+        "Apply a dormant copper spray before bud break"
+      ],
+      "treatment": [
+        "Apply protectant fungicides (captan or mancozeb) from bud break",
+        "Use systemic fungicides (myclobutanil) during high-risk wet periods",
+        "Repeat applications according to the product label and local extension advice",
+        "Remove and destroy heavily infected shoots and fallen leaves"
+      ],
+      "organic_options": [
+        "Sulfur or copper-based sprays during dormant and early season",
+        "Neem oil as a supporting protectant"
+      ],
+      "expert_note": "Scab control depends on protecting new leaves before infection; once lesions appear, fungicides only limit further spread."
+    },
+    {
+      "index": 1,
+      "label": "Apple Black rot",
+      "crop": "Apple",
+      "disease": "Apple Black rot",
+      "slug": "apple-black-rot",
+      "pathogen": "Botryosphaeria obtusa (fungus)",
+      "severity": "high",
+      "cause": "A fungal disease that spreads from cankers on branches and mummified fruit left on the tree or ground.",
+      "favorable_conditions": "Warm, humid weather; trees weakened by drought, freeze injury or poor pruning.",
+      "symptoms": [
+        "Frogeye leaf spots with light centres and purple margins",
+        "Brown rot spreading through fruit, ending in black mummies",
+        "Sunken, cracked cankers on branches"
+      ],
+      "prevention": [
+        "Prune out dead and cankered wood during dry weather",
+        "Remove mummified fruit and fallen debris",
+        "Disinfect pruning tools between cuts",
+        "Avoid mechanical injuries to bark and fruit",
+        "Maintain tree vigour with balanced nutrition and irrigation"
+      ],
+      "treatment": [
+        "Remove cankers and mummified fruit before spring",
+        "Apply captan or thiophanate-methyl during the growing season",
+        "Follow a preventive spray schedule from bud break through fruit development",
+        "Consult local extension guidance for resistance management"
+      ],
+      "organic_options": [
+        "Copper sprays during dormancy",
+        "Meticulous sanitation is the most important organic control"
+      ],
+      "expert_note": "Black rot is managed mainly through sanitation; fungicides cannot cure established cankers."
+    },
+    {
+      "index": 2,
+      "label": "Cedar apple rust",
+      "crop": "Apple",
+      "disease": "Cedar apple rust",
+      "slug": "cedar-apple-rust",
+      "pathogen": "Gymnosporangium juniperi-virginianae (fungus)",
+      "severity": "moderate",
+      "cause": "A rust fungus that requires two hosts: apple trees and juniper or cedar trees. Spores travel between them during wet spring weather.",
+      "favorable_conditions": "Wet spring weather and the presence of juniper/cedar hosts nearby.",
+      "symptoms": [
+        "Bright yellow-orange spots on the upper leaf surface",
+        "Raised orange spore structures under leaves",
+        "Premature leaf drop and reduced fruit quality"
+      ],
+      "prevention": [
+        "Remove nearby juniper or cedar trees that carry the fungus",
+        "Remove orange, gelatinous galls from junipers in spring",
+        "Choose rust-resistant apple varieties",
+        "Space trees for good airflow"
+      ],
+      "treatment": [
+        "Apply myclobutanil or mancozeb from pink bud through early summer",
+        "Protect new growth during wet spring periods",
+        "Remove infected leaves and fruit where practical"
+      ],
+      "organic_options": [
+        "Sulfur sprays during the susceptible spring window",
+        "Host removal is the most durable organic strategy"
+      ],
+      "expert_note": "The disease cannot persist on apple alone; removing the juniper host breaks the life cycle."
+    },
+    {
+      "index": 3,
+      "label": "Rice Bacterialblight",
+      "crop": "Rice",
+      "disease": "Bacterial blight",
+      "slug": "rice-bacterial-blight",
+      "pathogen": "Xanthomonas oryzae pv. oryzae (bacterium)",
+      "severity": "high",
+      "cause": "A bacterial disease spread by infected seed, irrigation water, rain splash and clipping of seedling tips.",
+      "favorable_conditions": "Warm, humid weather, standing water, high nitrogen and typhoon or heavy-rain damage.",
+      "symptoms": [
+        "Water-soaked yellow streaks along leaf edges",
+        "Lesions turning white or grey with wavy margins",
+        "Wilting of seedlings (kresek) and drying of leaves"
+      ],
+      "prevention": [
+        "Use certified disease-free seed and resistant varieties",
+        "Treat seed with hot water or a recommended bactericide",
+        "Avoid excessive nitrogen; apply balanced fertilizer",
+        "Drain fields periodically and avoid clipping seedling tips",
+        "Rotate with non-host crops and remove stubble"
+      ],
+      "treatment": [
+        "There is no direct cure; remove severely infected plants",
+        "Apply copper-based bactericides to reduce spread (label permitting)",
+        "Improve drainage and stop excessive nitrogen application",
+        "Consult local extension for region-specific resistant varieties"
+      ],
+      "organic_options": [
+        "Pseudomonas-based biocontrol seed treatment",
+        "Balanced organic matter and strict field sanitation"
+      ],
+      "expert_note": "Bacterial blight is best managed preventively; bactericides have limited effect once symptoms are widespread."
+    },
+    {
+      "index": 4,
+      "label": "Rice Blast",
+      "crop": "Rice",
+      "disease": "Rice blast",
+      "slug": "rice-blast",
+      "pathogen": "Magnaporthe oryzae (fungus)",
+      "severity": "high",
+      "cause": "A highly destructive fungal disease spread by airborne spores and infected seed residues.",
+      "favorable_conditions": "High humidity, prolonged leaf wetness, cool nights, dense planting and excess nitrogen.",
+      "symptoms": [
+        "Spindle or diamond-shaped lesions with grey centres",
+        "Brown margins around lesions on leaves",
+        "Neck rot that breaks the panicle and causes empty grains"
+      ],
+      "prevention": [
+        "Grow blast-resistant varieties suited to your region",
+        "Treat seed before sowing",
+        "Avoid excess nitrogen and dense sowing",
+        "Apply silicon and balanced nutrients",
+        "Maintain good water management and remove stubble"
+      ],
+      "treatment": [
+        "Apply tricyclazole, azoxystrobin or isoprothiolane at early symptoms",
+        "Protect the neck at the booting and heading stages",
+        "Rotate fungicide groups to avoid resistance",
+        "Remove and destroy infected residue after harvest"
+      ],
+      "organic_options": [
+        "Trichoderma seed treatment and silicon amendments",
+        "Bacillus-based biocontrol products as part of an integrated plan"
+      ],
+      "expert_note": "Neck blast causes the greatest yield loss; time fungicide applications before heading rather than after damage appears."
+    },
+    {
+      "index": 5,
+      "label": "Rice Brownspot",
+      "crop": "Rice",
+      "disease": "Brown spot",
+      "slug": "rice-brown-spot",
+      "pathogen": "Bipolaris oryzae (fungus)",
+      "severity": "moderate",
+      "cause": "A seed- and residue-borne fungus that is often worse in nutrient-deficient or water-stressed fields.",
+      "favorable_conditions": "Poor soils, low nitrogen or silicon, drought stress and high humidity.",
+      "symptoms": [
+        "Oval brown spots with a yellow halo",
+        "Seedling blight and poor establishment",
+        "Discoloured or shrivelled grain"
+      ],
+      "prevention": [
+        "Use healthy, certified seed and treat it before sowing",
+        "Maintain balanced soil fertility, especially nitrogen and silicon",
+        "Add organic matter and avoid drought stress",
+        "Rotate crops and remove crop residue"
+      ],
+      "treatment": [
+        "Apply mancozeb, carbendazim or propiconazole when symptoms appear",
+        "Correct nutrient deficiencies alongside fungicide use",
+        "Repeat only as recommended on the label"
+      ],
+      "organic_options": [
+        "Trichoderma seed treatment",
+        "Compost and silicon-rich amendments to build soil health"
+      ],
+      "expert_note": "Brown spot is often a symptom of a nutrient-stressed crop; fixing soil fertility is as important as spraying."
+    },
+    {
+      "index": 6,
+      "label": "Corn Cercospora leaf spot",
+      "crop": "Corn",
+      "disease": "Cercospora leaf spot",
+      "slug": "corn-cercospora-leaf-spot",
+      "pathogen": "Cercospora zeae-maydis (fungus)",
+      "severity": "moderate",
+      "cause": "A residue-borne fungus that survives in maize stubble and spreads during humid weather.",
+      "favorable_conditions": "Warm, humid weather, prolonged dew and continuous maize cropping.",
+      "symptoms": [
+        "Narrow, rectangular grey-tan lesions between leaf veins",
+        "Lesions joining to blight large areas of leaf",
+        "Reduced photosynthesis and grain fill"
+      ],
+      "prevention": [
+        "Rotate away from maize for at least one season",
+        "Manage residue through tillage or decomposition",
+        "Plant resistant hybrids",
+        "Avoid continuous maize and improve airflow"
+      ],
+      "treatment": [
+        "Apply a strobilurin or triazole fungicide if disease begins early",
+        "Protect the upper leaves during grain fill",
+        "Rotate fungicide modes of action"
+      ],
+      "organic_options": [
+        "Residue management and crop rotation are the primary tools",
+        "Biofungicides as part of an integrated programme"
+      ],
+      "expert_note": "This disease is strongly associated with maize-on-maize rotation; rotation is more effective than late spraying."
+    },
+    {
+      "index": 7,
+      "label": "Corn Common rust",
+      "crop": "Corn",
+      "disease": "Common rust",
+      "slug": "corn-common-rust",
+      "pathogen": "Puccinia sorghi (fungus)",
+      "severity": "moderate",
+      "cause": "Wind-borne rust spores that infect maize leaves when temperatures are moderate and leaves stay wet.",
+      "favorable_conditions": "Moderate temperatures (16-23 C), high humidity and long dew periods.",
+      "symptoms": [
+        "Small reddish-brown pustules on both leaf surfaces",
+        "Pustules that rupture and release powdery brown spores",
+        "Yellowing and early leaf death in severe cases"
+      ],
+      "prevention": [
+        "Plant resistant or tolerant hybrids",
+        "Sow early to avoid peak rust pressure",
+        "Scout fields regularly from the vegetative stage",
+        "Avoid excessive nitrogen that produces overly lush growth"
+      ],
+      "treatment": [
+        "Fungicides are usually economic only on susceptible hybrids or seed crops",
+        "Apply azoxystrobin or propiconazole when pustules first appear",
+        "Follow label rates and resistance-management guidance"
+      ],
+      "organic_options": [
+        "Resistant varieties are the most practical organic control",
+        "Sulfur or copper-based products have limited efficacy"
+      ],
+      "expert_note": "Common rust often arrives late and may not justify spraying in grain maize; focus on resistant hybrids."
+    },
+    {
+      "index": 8,
+      "label": "Corn Northern Leaf Blight",
+      "crop": "Corn",
+      "disease": "Northern leaf blight",
+      "slug": "corn-northern-leaf-blight",
+      "pathogen": "Exserohilum turcicum (fungus)",
+      "severity": "high",
+      "cause": "A residue-borne fungus that survives in maize stubble and spreads by wind and rain splash.",
+      "favorable_conditions": "Moderate temperatures, extended wet periods and continuous maize cropping.",
+      "symptoms": [
+        "Long, cigar-shaped tan lesions on leaves",
+        "Lesions spreading from lower to upper leaves",
+        "Large blighted areas and premature leaf death"
+      ],
+      "prevention": [
+        "Plant resistant hybrids with appropriate resistance ratings",
+        "Rotate maize with a non-host crop",
+        "Bury or decompose infected residue",
+        "Avoid dense stands and excessive nitrogen"
+      ],
+      "treatment": [
+        "Apply a strobilurin or triazole fungicide at early symptom or VT stage",
+        "Prioritise protection of the upper leaves",
+        "Rotate fungicide groups between seasons"
+      ],
+      "organic_options": [
+        "Rotation and residue management",
+        "Resistant hybrids are the foundation of organic control"
+      ],
+      "expert_note": "Early infections above the ear leaf cause the largest yield losses; scout from tasselling onward."
+    },
+    {
+      "index": 9,
+      "label": "Grape Black rot",
+      "crop": "Grape",
+      "disease": "Black rot",
+      "slug": "grape-black-rot",
+      "pathogen": "Guignardia bidwellii (fungus)",
+      "severity": "high",
+      "cause": "A fungus that overwinters in mummified berries and infected canes and spreads during warm, wet weather.",
+      "favorable_conditions": "Warm (20-30 C), humid weather with frequent rain during bloom and fruit development.",
+      "symptoms": [
+        "Tan leaf spots with dark borders and black fruiting dots",
+        "Brown rot on berries that shrink into black mummies",
+        "Cane lesions and weakened vines"
+      ],
+      "prevention": [
+        "Remove mummified berries and infected canes during pruning",
+        "Improve canopy airflow and sunlight exposure",
+        "Control weeds and avoid overhead irrigation",
+        "Start protectant sprays before bloom"
+      ],
+      "treatment": [
+        "Apply myclobutanil, mancozeb or captan according to the label",
+        "Maintain protection through bloom and early fruit development",
+        "Remove infected clusters promptly",
+        "Rotate fungicide groups to prevent resistance"
+      ],
+      "organic_options": [
+        "Copper or sulfur protectants",
+        "Strict sanitation and canopy management"
+      ],
+      "expert_note": "The fungus survives in mummies, so removing them is essential even if fungicides are used."
+    },
+    {
+      "index": 10,
+      "label": "Grape Esca (Black Measles)",
+      "crop": "Grape",
+      "disease": "Esca (Black Measles)",
+      "slug": "grape-esca",
+      "pathogen": "A complex of wood-decay fungi (Phaeomoniella, Phaeoacremonium and related species)",
+      "severity": "high",
+      "cause": "Wood-infecting fungi that enter through pruning wounds and slowly colonise the vine's vascular system.",
+      "favorable_conditions": "Older vines, large pruning wounds, drought stress and wet pruning conditions.",
+      "symptoms": [
+        "Tiger-stripe chlorosis and necrosis between veins",
+        "Dark spots (black measles) on berries",
+        "Sudden wilting or dieback of shoots (apoplexy)"
+      ],
+      "prevention": [
+        "Prune in dry weather and protect large wounds",
+        "Avoid large cuts and unnecessary vine injuries",
+        "Disinfect pruning tools between vines",
+        "Remove and burn severely infected wood",
+        "Renew trunks from suckers where practical"
+      ],
+      "treatment": [
+        "There is no reliable chemical cure for Esca",
+        "Surgical removal of affected wood can extend vine life",
+        "Replace severely affected vines",
+        "Protect pruning wounds with a registered dressing"
+      ],
+      "organic_options": [
+        "Trunk renewal and sanitation are the main organic options",
+        "Reduce vine stress through balanced water and nutrition"
+      ],
+      "expert_note": "Esca is a chronic wood disease; prevention through pruning hygiene is far more effective than any spray."
+    },
+    {
+      "index": 11,
+      "label": "Grape Leaf blight (Isariopsis Leaf Spot)",
+      "crop": "Grape",
+      "disease": "Leaf blight (Isariopsis leaf spot)",
+      "slug": "grape-leaf-blight",
+      "pathogen": "Pseudocercospora vitis (fungus, formerly Isariopsis clavispora)",
+      "severity": "moderate",
+      "cause": "A fungal leaf-spot disease that survives in fallen leaves and spreads during warm, humid weather.",
+      "favorable_conditions": "Warm, humid conditions, dense canopies and poor air circulation.",
+      "symptoms": [
+        "Angular brown lesions between leaf veins",
+        "Lesions with yellow halos and dark centres",
+        "Premature defoliation and reduced fruit ripening"
+      ],
+      "prevention": [
+        "Remove and destroy fallen leaves",
+        "Open the canopy with pruning for better airflow",
+        "Avoid overhead irrigation and excessive nitrogen",
+        "Maintain vineyard sanitation through the season"
+      ],
+      "treatment": [
+        "Apply copper or mancozeb protectant fungicides",
+        "Spray from early symptom detection and repeat per label",
+        "Combine sprays with canopy management"
+      ],
+      "organic_options": [
+        "Copper-based protectants",
+        "Canopy management and leaf removal"
+      ],
+      "expert_note": "Isariopsis is often a late-season disease; preventing early defoliation helps protect fruit quality and vine reserves."
+    }
+  ]
+}

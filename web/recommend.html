@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart crop recommendation — AgriNivis</title>
+  <meta name="description" content="Get crop recommendations based on soil type, pH, moisture, previous crop, fertilizer use, irrigation, season and local weather.">
+  <meta name="theme-color" content="#14532d">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="recommend">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="AgriNivis home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">AgriNivis</span>
+          <span class="brand-tag">Field intelligence</span>
+        </span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a data-nav="home" href="index.html">Home</a></li>
+          <li><a data-nav="detect" href="detect.html">Disease detection</a></li>
+          <li><a data-nav="recommend" href="recommend.html">Crop recommendation</a></li>
+          <li><a data-nav="about" href="about.html">Research</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm" href="detect.html">Scan a leaf</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container page-hero-row">
+        <div>
+          <span class="eyebrow">Smart crop recommendation</span>
+          <h1>Plant with the conditions you already have.</h1>
+          <p>
+            Tell AgriNivis about your soil, water, season and rotation. The engine
+            scores 24 crops against agronomic rules and adds local temperature and
+            rainfall context before ranking them.
+          </p>
+        </div>
+        <div class="badge badge-amber" style="padding:9px 14px">
+          <span class="dot"></span>
+          No login. No API key.
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tight" style="padding-top:8px">
+      <div class="container">
+        <div class="recommend-layout">
+          <form class="form-card reveal" id="recommend-form" novalidate>
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="num">01</span>
+                <h3>Your field</h3>
+              </div>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <label for="location-input">Location <span class="optional">optional, for weather</span></label>
+                  <div class="input-row">
+                    <input class="input" id="location-input" type="text" placeholder="Village, town or district" autocomplete="address-level2">
+                    <button class="btn btn-outline" type="button" id="weather-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                      Get weather
+                    </button>
+                    <button class="btn btn-outline" type="button" id="geo-btn" aria-label="Use my current location">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+                      My location
+                    </button>
+                  </div>
+                  <span class="hint" id="location-hint">Weather is fetched from Open-Meteo when you add a location. You can still get recommendations without it.</span>
+                </div>
+
+                <div class="field">
+                  <label for="soil-type">Soil type</label>
+                  <select class="select" id="soil-type" name="soil-type" required>
+                    <option value="">Select soil type</option>
+                    <option value="alluvial">Alluvial (river plains)</option>
+                    <option value="black" selected>Black cotton (regur)</option>
+                    <option value="red">Red soil</option>
+                    <option value="laterite">Laterite</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="loamy">Loamy</option>
+                    <option value="clay">Clay</option>
+                    <option value="peaty">Peaty</option>
+                    <option value="desert">Desert / arid</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="season">Growing season</label>
+                  <select class="select" id="season" name="season" required>
+                    <option value="kharif" selected>Kharif (monsoon)</option>
+                    <option value="rabi">Rabi (winter)</option>
+                    <option value="zaid">Zaid (summer)</option>
+                    <option value="year-round">Year-round / perennial</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="ph-range">Soil pH <span class="optional">measured or estimated</span></label>
+                  <div class="range-row">
+                    <input type="range" id="ph-range" name="ph" min="4.5" max="9" step="0.1" value="6.7">
+                    <span class="range-value" id="ph-value">6.7</span>
+                  </div>
+                  <span class="hint">pH 6.0-7.5 suits most field crops; tea and some fruit crops prefer more acidic soil.</span>
+                </div>
+
+                <div class="field full">
+                  <span class="field-label">Soil moisture at sowing</span>
+                  <div class="segmented" role="radiogroup" aria-label="Soil moisture">
+                    <input type="radio" name="moisture" id="moisture-low" value="low">
+                    <label for="moisture-low">Low / dry</label>
+                    <input type="radio" name="moisture" id="moisture-medium" value="medium" checked>
+                    <label for="moisture-medium">Medium</label>
+                    <input type="radio" name="moisture" id="moisture-high" value="high">
+                    <label for="moisture-high">High / wet</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="form-section-title">
+                <span class="num">02</span>
+                <h3>Water, nutrition and rotation</h3>
+              </div>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <span class="field-label">Irrigation availability</span>
+                  <div class="segmented" role="radiogroup" aria-label="Irrigation availability">
+                    <input type="radio" name="irrigation" id="irrigation-rainfed" value="rainfed">
+                    <label for="irrigation-rainfed">Rainfed only</label>
+                    <input type="radio" name="irrigation" id="irrigation-low" value="low">
+                    <label for="irrigation-low">Limited</label>
+                    <input type="radio" name="irrigation" id="irrigation-medium" value="medium" checked>
+                    <label for="irrigation-medium">Moderate</label>
+                    <input type="radio" name="irrigation" id="irrigation-assured" value="assured">
+                    <label for="irrigation-assured">Assured</label>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="previous-crop">Previous crop</label>
+                  <select class="select" id="previous-crop" name="previous-crop" required>
+                    <option value="fallow" selected>Fallow / resting</option>
+                    <option value="rice">Rice</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="maize">Maize</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="sugarcane">Sugarcane</option>
+                    <option value="chickpea">Chickpea</option>
+                    <option value="pigeon_pea">Pigeon pea (tur)</option>
+                    <option value="groundnut">Groundnut</option>
+                    <option value="soybean">Soybean</option>
+                    <option value="mustard">Mustard</option>
+                    <option value="pearl_millet">Pearl millet (bajra)</option>
+                    <option value="sorghum">Sorghum (jowar)</option>
+                    <option value="barley">Barley</option>
+                    <option value="lentil">Lentil</option>
+                    <option value="potato">Potato</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="onion">Onion</option>
+                    <option value="mung_bean">Mung bean (green gram)</option>
+                    <option value="finger_millet">Finger millet (ragi)</option>
+                    <option value="sesame">Sesame (til)</option>
+                    <option value="jute">Jute</option>
+                    <option value="banana">Banana</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="land-size">Land area <span class="optional">optional</span></label>
+                  <input class="input" id="land-size" name="land-size" type="number" min="0" step="0.1" placeholder="e.g. 2.5 acres">
+                </div>
+
+                <div class="field full">
+                  <span class="field-label">Fertilizer use</span>
+                  <div class="segmented" role="radiogroup" aria-label="Fertilizer use">
+                    <input type="radio" name="fertilizer" id="fert-none" value="none">
+                    <label for="fert-none">None</label>
+                    <input type="radio" name="fertilizer" id="fert-organic" value="organic">
+                    <label for="fert-organic">Organic / compost</label>
+                    <input type="radio" name="fertilizer" id="fert-mixed" value="mixed" checked>
+                    <label for="fert-mixed">Mixed</label>
+                    <input type="radio" name="fertilizer" id="fert-chemical" value="chemical">
+                    <label for="fert-chemical">Chemical / NPK</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit" id="recommend-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7"/><path d="M5 10c3 0 5 2 7 5 2-3 4-5 7-5"/></svg>
+                Recommend crops
+              </button>
+              <button class="btn btn-ghost" type="reset" id="reset-btn">Reset form</button>
+            </div>
+
+            <div class="form-error" id="recommend-error" role="alert"></div>
+
+            <div class="form-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+              <span>Recommendations are a starting point based on broad agronomic ranges. Confirm variety choice, seed rate and pest management with your local agriculture department.</span>
+            </div>
+          </form>
+
+          <div class="results-column reveal">
+            <div class="weather-card" id="weather-card">
+              <div class="weather-empty">
+                <div class="weather-place">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                  Local weather
+                </div>
+                <p>Add a location to include temperature, humidity and 7-day rainfall in the crop scoring.</p>
+                <button class="btn btn-outline btn-sm btn-on-dark" type="button" id="weather-empty-btn">Use my location</button>
+              </div>
+            </div>
+
+            <div id="results-empty" class="results-empty">
+              <div class="icon-tile amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V10"/><path d="M5 10c0-4 3-7 7-7s7 3 7 7"/><path d="M5 10c3 0 5 2 7 5 2-3 4-5 7-5"/></svg>
+              </div>
+              <h3>Your ranked crops appear here</h3>
+              <p>The engine scores season fit, soil, pH, water, moisture, weather, rotation and nutrient balance. Every result explains its score.</p>
+            </div>
+
+            <div id="results-content" hidden>
+              <div class="results-head">
+                <div>
+                  <span class="eyebrow" style="margin-bottom:8px">Recommendation</span>
+                  <h2 id="results-title">Best matches</h2>
+                  <p id="results-subtitle"></p>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button class="btn btn-outline btn-sm" type="button" id="print-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Save report
+                  </button>
+                </div>
+              </div>
+
+              <div class="score-legend" style="margin:14px 0 16px">
+                <span><i></i> Strong fit</span>
+                <span><i class="amber"></i> Suitable with care</span>
+                <span><i style="background:var(--clay)"></i> Weak fit</span>
+              </div>
+
+              <div class="rec-list" id="rec-list"></div>
+
+              <div class="disclaimer-strip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <strong>Scores are comparative, not guarantees.</strong>
+                  Local variety performance, seed quality, market prices and pest pressure can change the best choice. Use this ranking to shortlist crops, then verify with a field trial or your extension officer.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Method</span>
+          <h2>How the score is built.</h2>
+          <p class="lede">
+            Each crop is compared with your field on eight weighted criteria. The
+            weights favour the factors that most often decide whether a crop can
+            be grown at all: season, soil and water.
+          </p>
+        </div>
+
+        <div class="grid grid-4" style="gap:12px">
+          <div class="metric"><strong>22</strong><span>Season match</span></div>
+          <div class="metric"><strong>17</strong><span>Soil suitability</span></div>
+          <div class="metric"><strong>15</strong><span>Irrigation fit</span></div>
+          <div class="metric"><strong>13</strong><span>pH suitability</span></div>
+          <div class="metric"><strong>10</strong><span>Weather / temperature</span></div>
+          <div class="metric"><strong>10</strong><span>Crop rotation</span></div>
+          <div class="metric"><strong>8</strong><span>Soil moisture</span></div>
+          <div class="metric"><strong>5</strong><span>Nutrient balance</span></div>
+        </div>
+
+        <div style="margin-top:32px" class="accordion">
+          <details class="accordion-item" open>
+            <summary>What data goes into the recommendation?</summary>
+            <div class="accordion-body">
+              Soil type, pH, soil moisture, irrigation availability, previous crop,
+              fertilizer practice and season come from your inputs. Temperature,
+              humidity and 7-day rainfall come from the free Open-Meteo forecast
+              API when you provide a location. The crop suitability ranges and
+              rotation relationships are stored in a reviewed JavaScript knowledge
+              base, so the scoring runs entirely in your browser.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>Why a rule-based engine instead of a trained model?</summary>
+            <div class="accordion-body">
+              Public crop-recommendation datasets usually contain only N, P, K,
+              temperature, humidity, pH and rainfall. They do not include previous
+              crop, irrigation reliability or local soil type, which farmers can
+              actually report. A transparent rule-based engine can use all of those
+              inputs, explain every point in the score, and be audited by an
+              agronomist. The disease classifier is the trained ML component of
+              AgriNivis; the recommender is a complementary decision-support layer.
+            </div>
+          </details>
+          <details class="accordion-item">
+            <summary>What are the main limitations?</summary>
+            <div class="accordion-body">
+              The crop ranges are broad and intended for screening. The engine does
+              not know your soil test values, variety, seed cost, labour availability
+              or market price. Weather is a short forecast, not a seasonal climate
+              prediction. Always validate the shortlist against local package of
+              practices, and treat the output as one input into your decision.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="AgriNivis home">
+            <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.5 12 13 13 12"/></svg></span>
+            <span class="brand-text"><span class="brand-name">AgriNivis</span><span class="brand-tag">Field intelligence</span></span>
+          </a>
+          <p>An open AI-assisted agriculture project for early disease detection and climate-aware crop planning.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="detect.html">Disease detection</a></li>
+            <li><a href="recommend.html">Crop recommendation</a></li>
+            <li><a href="detect.html#library">Disease library</a></li>
+            <li><a href="recommend.html#method">Scoring method</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Project</h4>
+          <ul>
+            <li><a href="about.html">About &amp; research</a></li>
+            <li><a href="about.html#paper">Research paper</a></li>
+            <li><a href="about.html#model">Model details</a></li>
+            <li><a href="about.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="https://github.com/RajivGit7/AgriNivis" target="_blank" rel="noopener">GitHub repository</a></li>
+            <li><a href="detect.html#api">API settings</a></li>
+            <li><a href="about.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="footer-year">2026</span> AgriNivis. Built for farmers and researchers.</span>
+        <span class="footer-badge"><span class="dot"></span> AI screening aid, not a lab test</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/crop-data.js"></script>
+  <script src="assets/js/recommend.js"></script>
+</body>
+</html>

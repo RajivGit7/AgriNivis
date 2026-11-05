@@ -1,0 +1,6 @@
+# Inference runtime (works on Linux, Windows and macOS)
+ai-edge-litert>=2.0,<3
+Flask>=3.0,<4
+Pillow>=10.0,<13
+numpy>=1.24,<3
+gunicorn>=22.0,<24
